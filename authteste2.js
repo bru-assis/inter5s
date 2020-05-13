@@ -19,7 +19,8 @@ btnLogin.addEventListener('click', e =>{
     const pass = txtPwd.value;
     const auth = firebase.auth();
 
-   firebase.auth().signInWithEmailAndPassword(email, pass);
+    const promise = firebase.auth().signInWithEmailAndPassword(email, pass);
+    promise.catch(e => document.getElementsByClassName("erro").innerHTML = e.message);
   //e.preventDefault();
 });
 
@@ -29,23 +30,35 @@ btnCreate.addEventListener('click', e =>{
     const pass = txtPwd.value;
     const auth = firebase.auth();
 
-    const promise = firebase.auth().createUserWithEmailAndPassword(email, pass); 
-    promise.catch(e => console.log(e.message));
+    var promise = firebase.auth().createUserWithEmailAndPassword(email, pass); //.then(function)
+    promise.catch(e => document.getElementsByClassName("erro").innerHTML = e.message);
 //e.preventDefault();
        
 });
 
-
 //identifica o login
 firebase.auth().onAuthStateChanged(user => {
     if (user) {
-          document.getElementById("nomeUser").innerHTML = user.email;
-
+          document.getElementById("nomeUser").innerHTML = user.displayName;
+          document.getElementById("emailUser").innerHTML = user.email;
+          console.log(user);
     } else {
       console.log('não logado');
       document.getElementById("nomeUser").innerHTML = null;
+      document.getElementById("emailUser").innerHTML = null;
     }
   });
+
+// Salva o usuário e as informações no db
+/*
+firebase.auth.user().onCreate(user =>{
+firebase.firestore().collection('users').doc(user.uid).set({
+  bio: biografia,
+  local: localizacao,
+  pecas: minhasPecas
+});
+})
+*/
 
 
 // Sign Out
