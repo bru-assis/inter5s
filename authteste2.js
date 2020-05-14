@@ -1,9 +1,11 @@
+
 //sign in com Google
 googleSignIn=()=>{
     provedor = new firebase.auth.GoogleAuthProvider();
 
     firebase.auth().signInWithRedirect(provedor);
-};
+    e.preventDefault();
+    };
 
 
 //sign in email e senha
@@ -17,24 +19,23 @@ const btnLogOut = document.getElementById('btnLogOut');
 btnLogin.addEventListener('click', e =>{
     const email = txtEmail.value;
     const pass = txtPwd.value;
-    const auth = firebase.auth();
 
-    const promise = firebase.auth().signInWithEmailAndPassword(email, pass);
-    promise.catch(e => document.getElementsByClassName("erro").innerHTML = e.message);
-  //e.preventDefault();
+    firebase.auth().signInWithEmailAndPassword(email, pass);
+    
+  e.preventDefault();
 });
 
 // SignUp
 btnCreate.addEventListener('click', e =>{
     const email = txtEmail.value;
     const pass = txtPwd.value;
-    const auth = firebase.auth();
 
-    var promise = firebase.auth().createUserWithEmailAndPassword(email, pass); //.then(function)
-    promise.catch(e => document.getElementsByClassName("erro").innerHTML = e.message);
-//e.preventDefault();
+    firebase.auth().createUserWithEmailAndPassword(email, pass);
+    e.preventDefault();
+    });
+//
        
-});
+
 
 //identifica o login
 firebase.auth().onAuthStateChanged(user => {
@@ -49,23 +50,10 @@ firebase.auth().onAuthStateChanged(user => {
     }
   });
 
-// Salva o usuário e as informações no db
-/*
-firebase.auth.user().onCreate(user =>{
-firebase.firestore().collection('users').doc(user.uid).set({
-  bio: biografia,
-  local: localizacao,
-  pecas: minhasPecas
-});
-})
-*/
-
 
 // Sign Out
 
 btnLogOut.addEventListener('click', e =>{
     firebase.auth().signOut(); 
-    //e.preventDefault();
 });
 
-//preventDefault é pra página não att

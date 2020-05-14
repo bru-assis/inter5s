@@ -1,17 +1,14 @@
-
 // Salvar o post no DB
 function savePost(descricao) {
     var TXTdescricao = document.getElementById('descricao');
-    var descricao = TXTdescricao.value;
     var TXTtitulo = document.getElementById('titulo');
-    var titulo = TXTtitulo.value;
+    var user = firebase.auth().currentUser;
    
-   //pegar o uid tbm
-    return firebase.firestore().collection('postagens').add({
-      title: titulo,
-      text: descricao,
+    return firebase.firestore().collection('postagens').set({
+      title: TXTtitulo.value,
+      text: TXTdescricao.value,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      //uid: id
+      usuario: user.uid
     }).catch(function(error) {
       console.error('Error writing new message to database', error);
     });
@@ -25,6 +22,7 @@ ref.onSnapshot(snapshot => {
   snapshot.forEach(doc =>  {
       requests.push({...doc.data(), id: doc.id})
   });
+  console.log(requests);
 
   let html = '';
 requests.forEach(request => {
@@ -32,7 +30,6 @@ requests.forEach(request => {
 });
 document.getElementById('posts').innerHTML = html;
 });
-
 
 
  
