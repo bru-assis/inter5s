@@ -1,11 +1,11 @@
-
 //sign in com Google
-googleSignIn=()=>{
+const googleSignIn = document.getElementById('googleSignIn');
+googleSignIn.addEventListener('click', e=>{
     provedor = new firebase.auth.GoogleAuthProvider();
 
     firebase.auth().signInWithRedirect(provedor);
     e.preventDefault();
-    };
+    });
 
 
 //sign in email e senha
@@ -43,6 +43,9 @@ firebase.auth().onAuthStateChanged(user => {
           document.getElementById("nomeUser").innerHTML = user.displayName;
           document.getElementById("emailUser").innerHTML = user.email;
           console.log(user);
+          if(user.displayName!=null){
+            document.getElementById('userName').defaultValue = user.displayName;
+          };        
     } else {
       console.log('não logado');
       document.getElementById("nomeUser").innerHTML = null;

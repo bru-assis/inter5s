@@ -1,20 +1,23 @@
 // Salvar o post no DB
-function savePost(descricao) {
-    var TXTdescricao = document.getElementById('descricao');
-    var TXTtitulo = document.getElementById('titulo');
-    var user = firebase.auth().currentUser;
-   
-    return firebase.firestore().collection('postagens').set({
-      title: TXTtitulo.value,
-      text: TXTdescricao.value,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      usuario: user.uid
-    }).catch(function(error) {
-      console.error('Error writing new message to database', error);
-    });
-  }
+const savePost = document.getElementById('savePost');
+savePost.addEventListener('click', e =>{
 
-  // Exibir posts
+  const user = firebase.auth().currentUser;
+  const TXTdescricao = document.getElementById('descricao')
+  const TXTtitulo = document.getElementById('titulo');
+e.preventDefault();
+
+return firebase.firestore().collection('postagens').add({    
+  text: TXTdescricao.value,
+  title: TXTtitulo.value,
+  timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+  usuario: user.uid
+  }).then(
+      alert('Cadastrado com sucesso!'));
+});
+
+// Exibir posts
+
 const ref = firebase.firestore().collection('postagens');
 
 let requests = [];
@@ -32,4 +35,25 @@ document.getElementById('posts').innerHTML = html;
 });
 
 
+// Minhas vendas
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    firebase.firestore().collection('postagens').where("usuario", "==", user.uid)
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            console.log(doc.id, " => ", doc.data());
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
+  } else {
+    console.log('Nenhuma venda ')
+  }
+});
+
+
+// Editar e deletar post
+         
  

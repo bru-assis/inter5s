@@ -42,10 +42,10 @@
           </div>
       
           <div class="container" style="color: black;">
-           <!-- <div class="form-group">
+            <div class="form-group">
               <label for="exampleFormControlInput1"><b>Nome:</b></label>
               <input type="text" class="form-control" id="userName">
-              </div>-->
+              </div>
       
               <div class="form-group">
                 <label for="exampleFormControlInput1"><b>Biografia:</b></label>
@@ -68,7 +68,9 @@
       <br><br>
       <div  style="background-color: bisque; color: rgb(61, 61, 61);"> <h4>Perfil</h4> <br> <p><span id="emailUser"></span></p> </div>
       <br>
-      <div  style="background-color: brown; color: rgb(61, 61, 61);"> <h4>Les vetements</h4> <br> <span id="posts"></span> </div>
+      <div  style="background-color: brown; color: rgb(61, 61, 61);"> <h4>Roupas</h4> <br> <span id="posts"></span> </div>
+      <br>
+      <div  style="background-color: bisque; color: rgb(61, 61, 61);"> <h4>Minhas vendas</h4><br><span id="minhasVendas"></span></div>
 
 
       
@@ -96,7 +98,7 @@
         <p class="erro"></p>
 	  </form>
         <br>
-        <button class="btn btn-secondary" style="background-color: crimson;" onclick="googleSignIn()">
+        <button class="btn btn-secondary" style="background-color: crimson;" id="googleSignIn">
           Log In with Google
         </button>
         <br><br><br>
@@ -114,7 +116,7 @@
                   <input type="text" class="form-control" id="descricao" placeholder="Descrição">
                   </div>
           
-              <button onclick="savePost(descricao)">Adicionar</button>
+              <button id="savePost">Adicionar</button>
               <p class="erro"></p>
           </form>
     
