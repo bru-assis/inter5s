@@ -29,11 +29,27 @@ btnLogin.addEventListener('click', e =>{
 btnCreate.addEventListener('click', e =>{
     const email = txtEmail.value;
     const pass = txtPwd.value;
-
-    firebase.auth().createUserWithEmailAndPassword(email, pass);
+    const TXTbio = document.getElementById('bio');
+    const TXTlocal = document.getElementById('local');
+    
     e.preventDefault();
+
+    firebase.auth().createUserWithEmailAndPassword(email, pass).then(userCredential =>{
+      return firebase.firestore().collection('users').doc(userCredential.user.uid).set({    
+        bio: TXTbio.value,
+        local: TXTlocal.value,
+      }).then(userCredential =>{
+        //resolver essa parte do displayName
+        userCredential.user.updateProfile({
+          displayName: document.getElementById('userName').value
+        })
+      }).then(
+          alert('Cadastro completo!'));
+    }).catch(function(error){
+      console.log(error);
     });
-//
+    
+    });
        
 
 
