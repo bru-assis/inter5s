@@ -1,9 +1,11 @@
 //sign in com Google
-googleSignIn=()=>{
+const googleSignIn = document.getElementById('googleSignIn');
+googleSignIn.addEventListener('click', e=>{
     provedor = new firebase.auth.GoogleAuthProvider();
 
     firebase.auth().signInWithRedirect(provedor);
-};
+    e.preventDefault();
+    });
 
 
 //sign in email e senha
@@ -17,33 +19,53 @@ const btnLogOut = document.getElementById('btnLogOut');
 btnLogin.addEventListener('click', e =>{
     const email = txtEmail.value;
     const pass = txtPwd.value;
-    const auth = firebase.auth();
 
-   firebase.auth().signInWithEmailAndPassword(email, pass);
-  //e.preventDefault();
+    firebase.auth().signInWithEmailAndPassword(email, pass);
+    
+  e.preventDefault();
 });
 
 // SignUp
 btnCreate.addEventListener('click', e =>{
     const email = txtEmail.value;
     const pass = txtPwd.value;
-    const auth = firebase.auth();
+    const TXTbio = document.getElementById('bio');
+    const TXTlocal = document.getElementById('local');
+    
+    e.preventDefault();
 
-    const promise = firebase.auth().createUserWithEmailAndPassword(email, pass); 
-    promise.catch(e => console.log(e.message));
-//e.preventDefault();
+    firebase.auth().createUserWithEmailAndPassword(email, pass).then(userCredential =>{
+      return firebase.firestore().collection('users').doc(userCredential.user.uid).set({    
+        bio: TXTbio.value,
+        local: TXTlocal.value,
+      }).then(userCredential =>{
+        //resolver essa parte do displayName
+        userCredential.user.updateProfile({
+          displayName: document.getElementById('userName').value
+        })
+      }).then(
+          alert('Cadastro completo!'));
+    }).catch(function(error){
+      console.log(error);
+    });
+    
+    });
        
-});
 
 
 //identifica o login
 firebase.auth().onAuthStateChanged(user => {
     if (user) {
-          document.getElementById("nomeUser").innerHTML = user.email;
-
+          document.getElementById("nomeUser").innerHTML = user.displayName;
+          document.getElementById("emailUser").innerHTML = user.email;
+          console.log(user);
+          if(user.displayName!=null){
+            document.getElementById('userName').defaultValue = user.displayName;
+          };        
     } else {
       console.log('não logado');
       document.getElementById("nomeUser").innerHTML = null;
+      document.getElementById("emailUser").innerHTML = null;
     }
   });
 
@@ -52,7 +74,5 @@ firebase.auth().onAuthStateChanged(user => {
 
 btnLogOut.addEventListener('click', e =>{
     firebase.auth().signOut(); 
-    //e.preventDefault();
 });
 
-//preventDefault é pra página não att

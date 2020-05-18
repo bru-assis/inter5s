@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Perfil</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="style.css">
+	<style>
+		 .footer{
+		background-color: rgb(60, 0, 172);
+		color: white;
+		padding: 20px;
+        bottom:0%;
+	}
+	</style>
+
+
+</head>
+
+<body>
+
+<div class="jumbotron text-center" style="margin-bottom:0;background-color: rgb(60, 0, 172);color: white;">
+    <h3>Olá <span id="nomeUser"></span>!</h3>
+  </div>
+<div class="container-fluid">
+	<div class="row">
+    <div class="col-sm-6" style="background-color:rgb(228, 211, 233);color: white;">
+      <br>
+
+      <br><br>
+      <div  style="background-color: bisque; color: rgb(61, 61, 61);"> <h4>Perfil</h4> <br> <p><span id="emailUser"></span></p> </div>
+      <br>
+      <div  style="background-color: brown; color: rgb(61, 61, 61);"> <h4>Roupas</h4> <br> <span id="posts"></span> </div>
+      <br>
+      <div  style="background-color: bisque; color: rgb(61, 61, 61);"> <h4>Minhas vendas</h4><br><span id="minhasVendas"></span></div>
+
+
+      
+</div>
+
+	  <div class="col-sm-6" style="background-color: rgb(226, 255, 250);">
+		<form>
+		<br>
+      <div class="form-group">
+      <label for="exampleFormControlInput1"><b>Nome:</b></label>
+      <input type="text" class="form-control" id="userName">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1"><b>Biografia:</b></label>
+        <input type="text" class="form-control" id="bio" >
+        </div>
+
+        <div class="form-group">
+            <label for="exampleFormControlInput1"><b>Localização:</b></label>
+            <input type="text" class="form-control" id="local" >
+            </div>
+		
+      <div class="form-group">
+			<label for="exampleFormControlInput1"><b>Email</b></label>
+			<input type="email" class="form-control" id="txtEmail">
+		  </div>
+	
+		  <div class="form-group">
+			<label for="exampleFormControlInput1"><b>Senha</b></label>
+			<input type="password" class="form-control" id="txtPwd">
+		  </div>
+		
+        <button id="btnLogin" class="btn btn-primary">Log In</button>
+		   <button id="btnCreate"   class="btn btn-dark">Sign In</button>
+        <button id="btnLogOut" class="btn btn-secondary">Log Out</button>
+
+        <p class="erro"></p>
+	  </form>
+        <br>
+        <button class="btn btn-secondary" style="background-color: crimson;" id="googleSignIn">
+          Log In with Google
+        </button>
+        <br><br><br>
+        <form>
+            <br>
+                
+          <div class="form-group">
+            <div class="form-group">
+                <label for="exampleFormControlInput1"><b>Título</b></label>
+                <input type="text" class="form-control" id="titulo" placeholder="Titulo">
+                </div>
+        
+                <div class="form-group">
+                  <label for="exampleFormControlInput1"><b>Descrição</b></label>
+                  <input type="text" class="form-control" id="descricao" placeholder="Descrição">
+                  </div>
+          
+              <button id="savePost">Adicionar</button>
+              <p class="erro"></p>
+          </form>
+    
+	</div>
+	</div>
+  </div>
+
+<div class= "footer"></div>
+
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
+<!--<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-messaging.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-storage.js"></script>-->
+<script src="config.js"></script>
+<script src="authteste2.js"></script>
+
+</body>
+</html>
