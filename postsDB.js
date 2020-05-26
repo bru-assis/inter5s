@@ -21,7 +21,7 @@ savePost.addEventListener('click', e =>{
     const TXTdescricao = document.getElementById('descricao')
     const TXTtitulo = document.getElementById('titulo');
     
-    e.preventDefault();
+    //e.preventDefault();
 
 return firebase.firestore().collection('postagens').add({    
   text: TXTdescricao.value,
@@ -29,7 +29,8 @@ return firebase.firestore().collection('postagens').add({
   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
   usuario: user.uid,
   imagem: btnImg.src
-  }); 
+  }).then(
+    alert('Adicionado com sucesso!')); 
 });
 
 // Exibir posts
