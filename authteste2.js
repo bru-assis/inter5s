@@ -65,7 +65,7 @@ btnCreate.addEventListener('click', e =>{
 //identifica o login
 firebase.auth().onAuthStateChanged(user => {
     if (user) {
-          document.getElementById('fLogin').innerHTML.style.display='none'
+          document.getElementById('fLogin').style.display='none'
           document.getElementById("nomeUser").innerHTML = user.displayName;
           document.getElementById("emailUser").innerHTML = user.email;
           console.log(user);
@@ -75,7 +75,7 @@ firebase.auth().onAuthStateChanged(user => {
             document.getElementById('userName').defaultValue = user.displayName;
           };        
     } else {
-      document.getElementById('fLogin').innerHTML.style.display='block'
+      document.getElementById('fLogin').style.display='block'
       console.log('não logado');
       document.getElementById("nomeUser").innerHTML = null;
       document.getElementById("emailUser").innerHTML = null;
