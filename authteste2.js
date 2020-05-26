@@ -3,11 +3,21 @@ const googleSignIn = document.getElementById('googleSignIn');
 googleSignIn.addEventListener('click', e=>{
     provedor = new firebase.auth.GoogleAuthProvider();
 
-    firebase.auth().signInWithRedirect(provedor);
+    firebase.auth().signInWithRedirect(provedor).then(
+      firebase.auth().getRedirectResult().then(function(result){
+      return firebase.firestore().collection('users').doc(result.user.uid).set({    
+        bio: '',
+        local: '',
+        vendas: 0
+      }).catch(function(error){
+        console.log(error);
+      }); 
+    }));
     e.preventDefault();
-    });
+  });
+    
 
-
+    
 //sign in email e senha
 const txtEmail = document.getElementById('txtEmail');
 const txtPwd = document.getElementById('txtPwd');
@@ -35,14 +45,13 @@ btnCreate.addEventListener('click', e =>{
     e.preventDefault();
 
     firebase.auth().createUserWithEmailAndPassword(email, pass).then(userCredential =>{
+      userCredential.user.updateProfile({
+        displayName: document.getElementById('userName').value
+      });
       return firebase.firestore().collection('users').doc(userCredential.user.uid).set({    
         bio: TXTbio.value,
         local: TXTlocal.value,
-      }).then(userCredential =>{
-        //resolver essa parte do displayName
-        userCredential.user.updateProfile({
-          displayName: document.getElementById('userName').value
-        })
+        vendas: 0
       }).then(
           alert('Cadastro completo!'));
     }).catch(function(error){
@@ -56,13 +65,17 @@ btnCreate.addEventListener('click', e =>{
 //identifica o login
 firebase.auth().onAuthStateChanged(user => {
     if (user) {
+          document.getElementById('fLogin').innerHTML.style.display='none'
           document.getElementById("nomeUser").innerHTML = user.displayName;
           document.getElementById("emailUser").innerHTML = user.email;
           console.log(user);
+          gamificacao();
+          //criar uma function que verifica quantas vezes o user logou
           if(user.displayName!=null){
             document.getElementById('userName').defaultValue = user.displayName;
           };        
     } else {
+      document.getElementById('fLogin').innerHTML.style.display='block'
       console.log('não logado');
       document.getElementById("nomeUser").innerHTML = null;
       document.getElementById("emailUser").innerHTML = null;

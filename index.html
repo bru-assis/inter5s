@@ -11,27 +11,89 @@
     
     <link rel="stylesheet" href="style.css">
 	<style>
-		 .footer{
-		background-color: rgb(60, 0, 172);
-		color: white;
-		padding: 20px;
-        bottom:0%;
-	}
+  #medal1{
+            height: 50px;
+            width: 50px;
+            background-color: violet;
+            opacity: 50%;
+        };
 	</style>
 
 
 </head>
 
 <body>
+  <div class="auth">
+    <div id="fLogin" class="modal active"  style="display: block; background-color: wheat;">
 
-<div class="jumbotron text-center" style="margin-bottom:0;background-color: rgb(60, 0, 172);color: white;">
-    <h3>Olá <span id="nomeUser"></span>!</h3>
+      <div class="imgcontainer">
+        <span onclick="document.getElementById('fLogin').style.display='none'" class="close" title="Close Modal">&times;</span>
+        
+      </div>
+      <h3 style="text-align: center;">Login</h3>
+      <form style="width: 50%; margin: auto;">
+        <br>
+            <div class="form-group">
+              <label for="exampleFormControlInput1"><b>Email</b></label>
+              <input type="email" class="form-control" id="txtEmail">
+              </div>
+          
+              <div class="form-group">
+              <label for="exampleFormControlInput1"><b>Senha</b></label>
+              <input type="password" class="form-control" id="txtPwd">
+              </div>
+
+          <div class="form-group">
+          <label for="exampleFormControlInput1"><b>Nome:</b></label>
+          <input type="text" class="form-control" id="userName">
+          </div>
+    
+          <div class="form-group">
+            <label for="exampleFormControlInput1"><b>Biografia:</b></label>
+            <input type="text" class="form-control" id="bio" >
+            </div>
+    
+            <div class="form-group">
+                <label for="exampleFormControlInput1"><b>Localização:</b></label>
+                <input type="text" class="form-control" id="local" >
+                </div>
+        
+            <button id="btnLogin" class="btn btn-primary">Log In</button>
+           <button id="btnCreate"   class="btn btn-dark">Sign In</button>
+           <button class="btn btn-secondary" style="background-color: crimson;" id="googleSignIn">
+            Log In with Google
+          </button>
+            <p class="erro"></p>
+        </form>
+    </div>
   </div>
+  
 <div class="container-fluid">
 	<div class="row">
-    <div class="col-sm-6" style="background-color:rgb(228, 211, 233);color: white;">
+    <div class="col-sm-6" style="background-color:rgb(235, 235, 235);color: black;">
       <br>
-      <button class="btn btn-secondary" onclick="document.getElementById('id01').style.display='block'"> Perfil </button>
+      <div  style="background-color: rgb(212, 212, 212); color: rgb(61, 61, 61);"> 
+        <h4>Olá <span id="nomeUser"></span>!</h4><br> <p><span id="emailUser"></span></p> <br>
+        <button id="btnLogOut" class="btn btn-secondary">Log Out</button><br><br>
+      </div><br><br>
+      
+      <div  style="background-color: rgb(173, 173, 173); color: rgb(61, 61, 61);">
+      <h5>Medalhas </h5>
+      <button class="btn btn-secondary" onclick="clicando()"> Teste (clicar 10x) </button>
+      <br> <br>
+      <div id="medal1"></div>
+      <br>
+      </div><br><br>
+     
+      <div  style="background-color: rgb(212, 212, 212); color: rgb(61, 61, 61);"><h4>Minhas vendas</h4><br><ul id="minhasVendas"></ul><br></div>
+  <br><br><br>
+</div>
+
+    <div class="col-sm-6" style="background-color: rgb(39, 39, 39); color: white;">
+      <br>
+      <div  style="background-color: rgb(71, 71, 71);"> 
+        <br>
+        <button class="btn btn-secondary" onclick="document.getElementById('id01').style.display='block'"> Add Peças</button>
 
       <div id="id01" class="modal">
   
@@ -43,98 +105,46 @@
       
           <div class="container" style="color: black;">
             <div class="form-group">
-              <label for="exampleFormControlInput1"><b>Nome:</b></label>
-              <input type="text" class="form-control" id="userName">
+              <label for="exampleFormControlInput1"><b>Título</b></label>
+              <input type="text" class="form-control" id="titulo" placeholder="Titulo">
               </div>
       
               <div class="form-group">
-                <label for="exampleFormControlInput1"><b>Biografia:</b></label>
-                <input type="text" class="form-control" id="bio" >
+                <label for="exampleFormControlInput1"><b>Descrição</b></label>
+                <input type="text" class="form-control" id="descricao" placeholder="Descrição">
                 </div>
 
-                <div class="form-group">
-                    <label for="exampleFormControlInput1"><b>Localização:</b></label>
-                    <input type="text" class="form-control" id="local" >
-                    </div>
+                <label class="upload-group">
+                  <input type="file" id="btnImg">
+                </label>
+                <br>
         
-            <button id="btnATT">Atualizar Perfil</button>
+                <button class="btn btn-secondary" id="savePost">Adicionar</button>
             <p class="erro"></p>
           </div>
       
           
         </form>
       </div>
-
-      <br><br>
-      <div  style="background-color: bisque; color: rgb(61, 61, 61);"> <h4>Perfil</h4> <br> <p><span id="emailUser"></span></p> </div>
-      <br>
-      <div  style="background-color: brown; color: rgb(61, 61, 61);"> <h4>Roupas</h4> <br> <span id="posts"></span> </div>
-      <br>
-      <div  style="background-color: bisque; color: rgb(61, 61, 61);"> <h4>Minhas vendas</h4><br><span id="minhasVendas"></span></div>
-
-
-      
-</div>
-
-	  <div class="col-sm-6" style="background-color: rgb(226, 255, 250);">
-		<form>
-		<br>
-		
-		
-      <div class="form-group">
-			<label for="exampleFormControlInput1"><b>Email</b></label>
-			<input type="email" class="form-control" id="txtEmail">
-		  </div>
-	
-		  <div class="form-group">
-			<label for="exampleFormControlInput1"><b>Senha</b></label>
-			<input type="password" class="form-control" id="txtPwd">
-		  </div>
-		
-        <button id="btnLogin" class="btn btn-primary">Log In</button>
-		   <button id="btnCreate"   class="btn btn-dark">Sign In</button>
-        <button id="btnLogOut" class="btn btn-secondary">Log Out</button>
-
-        <p class="erro"></p>
-	  </form>
-        <br>
-        <button class="btn btn-secondary" style="background-color: crimson;" id="googleSignIn">
-          Log In with Google
-        </button>
-        <br><br><br>
-        <form>
-            <br>
-                
-          <div class="form-group">
-            <div class="form-group">
-                <label for="exampleFormControlInput1"><b>Título</b></label>
-                <input type="text" class="form-control" id="titulo" placeholder="Titulo">
-                </div>
-        
-                <div class="form-group">
-                  <label for="exampleFormControlInput1"><b>Descrição</b></label>
-                  <input type="text" class="form-control" id="descricao" placeholder="Descrição">
-                  </div>
-          
-              <button id="savePost">Adicionar</button>
-              <p class="erro"></p>
-          </form>
+        <h4>Roupas</h4>  
+        <br> 
+        <ul id="posts"></ul>
+        <br> 
+      </div>
     
 	</div>
 	</div>
   </div>
 
-<div class= "footer"></div>
-
 <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
-<!--<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-messaging.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-storage.js"></script>-->
+<!--<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-messaging.js"></script>-->
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-storage.js"></script>
 <script src="config.js"></script>
 <script src="authteste2.js"></script>
-<script src="perfil.js"></script>
 <script src="postsDB.js"></script>
+<script src="clicando.js"></script>
 
 </body>
 </html>
