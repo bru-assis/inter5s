@@ -17,15 +17,7 @@ googleSignIn.addEventListener('click', e=>{
             local: '',
             vendas: 0
         });
-        /*var doc = doc.id;
-        if(!doc.id){
-          firebase.firestore().collection('users').doc(result.user.uid)
-          .set({    
-            bio: '',
-            local: '',
-            vendas: 0
-        });
-      }*/}).catch(function(error){
+       }).catch(function(error){
         console.log(error);
       }); 
   });
