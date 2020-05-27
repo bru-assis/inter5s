@@ -3,19 +3,34 @@ const googleSignIn = document.getElementById('googleSignIn');
 googleSignIn.addEventListener('click', e=>{
     provedor = new firebase.auth.GoogleAuthProvider();
 
-    firebase.auth().signInWithRedirect(provedor).then(
-      firebase.auth().getRedirectResult().then(function(result){
-      return firebase.firestore().collection('users').doc(result.user.uid).set({    
-        bio: '',
-        local: '',
-        vendas: 0
-      }).catch(function(error){
-        console.log(error);
-      }); 
-    }));
+    firebase.auth().signInWithRedirect(provedor);
+    firebase.auth().getRedirectResult();
     e.preventDefault();
   });
+
+  function saveDB(){
+    firebase.auth().getRedirectResult().then(function(result){
+      return firebase.firestore().collection('users').doc(result.user.uid).get().then(()=> {
+        firebase.firestore().collection('users').doc(result.user.uid)
+          .add({    
+            bio: '',
+            local: '',
+            vendas: 0
+        });
+        /*var doc = doc.id;
+        if(!doc.id){
+          firebase.firestore().collection('users').doc(result.user.uid)
+          .set({    
+            bio: '',
+            local: '',
+            vendas: 0
+        });
+      }*/}).catch(function(error){
+        console.log(error);
+      }); 
+  });
     
+};
 
     
 //sign in email e senha
@@ -70,6 +85,7 @@ firebase.auth().onAuthStateChanged(user => {
           document.getElementById("emailUser").innerHTML = user.email;
           console.log(user);
           gamificacao();
+          saveDB();
           //criar uma function que verifica quantas vezes o user logou
           if(user.displayName!=null){
             document.getElementById('userName').defaultValue = user.displayName;
@@ -88,4 +104,3 @@ firebase.auth().onAuthStateChanged(user => {
 btnLogOut.addEventListener('click', e =>{
     firebase.auth().signOut(); 
 });
-
