@@ -116,17 +116,19 @@ ref.onSnapshot(snapshot => {
 
   let html = '';
 requests.forEach(request => {
-  html += `<li id= ${request.id} class="popup" onclick="exibir(this)">`;
+  html += `<li id= ${request.id} class="roupa" onclick="exibir(this)">`;
   html += `<img src= "${request.imagem}" style="width:50px;height:50px;">`;
   html += `<h5> ${request.title}</h5>`;
+  html += `</li>`
 
-  html += `<div class="popuptext" id= ${request.id}a>`;
+  html += `<div class="roupaPagina" id= ${request.id}a>`;
+  html += `<div class="conteudo">`;
+  html += `<span onclick="fechar()" class="close" title="Close Modal">&times;</span>`;
   html += `<img src= "${request.imagem}" style="width:50px;height:50px;">`;
   html += `<h5> ${request.title}</h5>`;
   html += `<p> ${request.text}</p>`;
-  html+= `</div>`
-
-  html += `</li>`
+  html+= `</div>`;
+  html+= `</div>`;
 });
 document.getElementById('posts').innerHTML = html;
 });
@@ -135,5 +137,15 @@ function exibir(self) {
   var postId = self.id + "a";
 
   var popup = document.getElementById(postId);
-  popup.classList.toggle("show");
+  popup.style.display = "block" ;
+};
+
+function fechar(){
+  var x = document.getElementsByClassName("roupaPagina");
+  var y = document.getElementsByClassName("conteudo");
+  var i;
+for (i = 0; i < x.length; i++) {
+  x[i].style.display = "none";
+  y[i].style.display = "none";
+ }
 };
