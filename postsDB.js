@@ -21,7 +21,7 @@ savePost.addEventListener('click', e =>{
     const TXTdescricao = document.getElementById('descricao')
     const TXTtitulo = document.getElementById('titulo');
     
-    //e.preventDefault();
+    e.preventDefault();
 
 return firebase.firestore().collection('postagens').add({    
   text: TXTdescricao.value,
@@ -29,30 +29,10 @@ return firebase.firestore().collection('postagens').add({
   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
   usuario: user.uid,
   imagem: btnImg.src
-  }).then(
-    alert('Adicionado com sucesso!')); 
+  }); 
 });
 
 // Exibir posts
-
-const ref = firebase.firestore().collection('postagens');
-
-let requests = [];
-ref.onSnapshot(snapshot => {
-  snapshot.forEach(doc =>  {
-      requests.push({...doc.data(), id: doc.id})
-  });
-
-  let html = '';
-requests.forEach(request => {
-  html += `<li>`
-  html += `<h5> ${request.title}</h5>`;
-  html += `<p> ${request.text}</p>`;
-  html += `<img src= "${request.imagem}" style="width:50px;height:50px;">`;
-  html += `</li>`
-});
-document.getElementById('posts').innerHTML = html;
-});
 
 
 // Minhas vendas
@@ -65,14 +45,19 @@ firebase.auth().onAuthStateChanged(function(user) {
         querySnapshot.forEach(function(doc) {
           minhasRoupas.push({...doc.data(), id: doc.id});
         });
+        //meter um if doc.exist pra exbiri isso ou não tem nada
         let html = '';
         minhasRoupas.forEach(roupa => {
-          html += `<li>`
+          html += `<li id= ${roupa.id} class="popup" onclick="exibir2(this)">`;
+          html += `<img src= "${roupa.imagem}" style="width:50px;height:50px;">`;
           html += `<h5> ${roupa.title}</h5>`;
+          
+          html += `<div class="popuptext" id= ${request.id}b>`;
           html += `<p> ${roupa.text}</p>`;
-          //html += `<img src= "${roupa.imagem}" style="width:50px;height:50px;">`;
-          html += `<button id= "ATTPost"> Editar </button>`;
-          html += `<button id= "DELPost"> Deletar </button>`;
+          html += `<button data-id= ${roupa.id} onclick="atualizar(this)"> Editar </button>`;
+          html += `<button data-id= ${roupa.id} onclick="deletar(this)"> Deletar </button>`;
+          html+= `</div>`
+
           html += `</li>`
         });
         document.getElementById('minhasVendas').innerHTML = html;
@@ -86,30 +71,69 @@ firebase.auth().onAuthStateChanged(function(user) {
   }
 });
 
+function exibir2(self) {
+  var postId = self.id + "b";
+
+  var popup = document.getElementById(postId);
+  popup.classList.toggle("show");
+};
+
 
 // Editar e deletar post
 //editar
-  const attPost = document.getElementById('ATTPost');
-  const delPost = document.getElementById('DELPost');
-
-attPost.addEventListener('click', e =>{
+function atualizar(self){
+var postId = self.getAttribute("data-id");
 const TXTdescricao = document.getElementById('descricao')
 const TXTtitulo = document.getElementById('titulo');
 e.preventDefault();
 
-return firebase.firestore().collection('postagens').doc(doc.id).update({    
+return firebase.firestore().collection('postagens').doc(postId).update({    
 text: TXTdescricao.value,
 title: TXTtitulo.value
 }).then(
     alert('Atualizado com sucesso!'));
-});
+};
 
 //deletar
-//primeiro vai chamar um alert e no alert que vai ser possível deletar real
-delPost.addEventListener('click', e =>{
-e.preventDefault();
+function deletar(self){
+  var postId = self.getAttribute("data-id");
 
-return firebase.firestore().collection('postagens').doc(doc.id).delete().then(
+  return firebase.firestore().collection('postagens').doc(postId).delete().then(
     alert('Deletado com sucesso!'));
-});        
- 
+  };
+//primeiro vai chamar um alert e no alert que vai ser possível deletar real
+
+
+//Exibir cada post
+
+const ref = firebase.firestore().collection('postagens');
+
+let requests = [];
+ref.onSnapshot(snapshot => {
+  snapshot.forEach(doc =>  {
+      requests.push({...doc.data(), id: doc.id})
+  });
+
+  let html = '';
+requests.forEach(request => {
+  html += `<li id= ${request.id} class="popup" onclick="exibir(this)">`;
+  html += `<img src= "${request.imagem}" style="width:50px;height:50px;">`;
+  html += `<h5> ${request.title}</h5>`;
+
+  html += `<div class="popuptext" id= ${request.id}a>`;
+  html += `<img src= "${request.imagem}" style="width:50px;height:50px;">`;
+  html += `<h5> ${request.title}</h5>`;
+  html += `<p> ${request.text}</p>`;
+  html+= `</div>`
+
+  html += `</li>`
+});
+document.getElementById('posts').innerHTML = html;
+});
+
+function exibir(self) {
+  var postId = self.id + "a";
+
+  var popup = document.getElementById(postId);
+  popup.classList.toggle("show");
+};

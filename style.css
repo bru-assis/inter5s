@@ -105,3 +105,35 @@ span.psw {
      width: 100%;
   }
 }
+
+
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 100px;
+}
+
+/* The actual popup */
+.popup .popuptext {
+  visibility: hidden;
+  background-color: rgb(104, 54, 54);
+  color: #fff;
+  text-align: left;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin-left: 0;
+  padding: 50px;
+  width: 100%;
+}
+
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+  visibility: visible;
+}
